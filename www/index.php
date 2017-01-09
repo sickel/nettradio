@@ -2,7 +2,6 @@
 
 $ch=$_GET['ch'];
 // echo($ch);
-echo('<br/>');
 $chs=array(
 'p1'=>array('NRK P1','http://lyd.nrk.no/nrk_radio_p1_ostlandssendingen_mp3_h'),
 'p2'=>array('NRK P2','http://lyd.nrk.no/nrk_radio_p2_mp3_h'),
@@ -28,11 +27,13 @@ if(array_key_exists($ch,$chs)){
      fclose($f);
    }
 }
-if($_GET['off']=='Av'){
+if(array_key_exists('off',$_GET) && $_GET['off']=='Av'){
 	`/usr/local/bin/radio.sh off`;	
 }
 ?>
-<html><head><title>Nettradio</title></head><body>
+<html><head><title>Nettradio</title>
+<meta name="viewport" content="width=device-width, initial-scale=1"></head>
+<body>
 <form action="" method="get">
 <select name="ch">
 <?php
