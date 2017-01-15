@@ -1,7 +1,11 @@
+<html><head><title>Nettradio</title>
+<meta name="viewport" content="width=device-width, initial-scale=1"></head>
+<body><br />
+
 <?php
 
-$ch=$_GET['ch'];
-// echo($ch);
+$file='ch.txt';
+//print_r($_GET);
 $chs=array(
 'p1'=>array('NRK P1','http://lyd.nrk.no/nrk_radio_p1_ostlandssendingen_mp3_h'),
 'p2'=>array('NRK P2','http://lyd.nrk.no/nrk_radio_p2_mp3_h'),
@@ -13,27 +17,53 @@ $chs=array(
 'nyheter'=>array('NRK alltid nyheter','http://lyd.nrk.no/nrk_radio_alltid_nyheter_mp3_h'),
 'mp3'=>array('NRK mp3','http://lyd.nrk.no/nrk_radio_mp3_mp3_h')
 );
-$file='ch.txt';
+$ch='';
+if(array_key_exists('ch',$_GET)){
+    $ch=$_GET['ch'];
+}else{
+   $f=fopen($file,"r");
+   if($f){
+     $ch=fread($f,filesize($file));
+     fclose($f);
+  //   print("ch:$ch<-");
+   }
+   //print("ch ok|$ch|<br/>");
+   if(array_key_exists('browse',$_GET)){
+    //echo('browse');
+      $keys=array_keys($chs);
+      //print_r($keys);
+      $idx=array_search($ch,$keys);
+      //print($idx);
+      if($idx===false){
+        $ch=$keys[0];
+     }else{
+        if($_GET['browse']=='prev'){
+            $idx--;
+        }else{
+            $idx++;
+        }
+        $n=count($keys);
+        if ($idx<0){$idx=$n-1;}
+        elseif($idx >=$n){
+            $idx=0;
+            }
+        $ch=$keys[$idx];
+        //echo($ch);
+     }
+   }
+}
+//echo($ch);
 if(array_key_exists($ch,$chs)){
   $stream=$chs[$ch][1];
   `/usr/local/bin/radio.sh $stream`;
   $f=fopen($file,"w");
   fwrite($f,$ch);
   fclose($f);
-}else{
-   $f=fopen($file,"r");
-   if($f){
-     $ch=fread($f,filesize($file));
-     fclose($f);
-   }
 }
 if(array_key_exists('off',$_GET) && $_GET['off']=='Av'){
 	`/usr/local/bin/radio.sh off`;	
 }
 ?>
-<html><head><title>Nettradio</title>
-<meta name="viewport" content="width=device-width, initial-scale=1"></head>
-<body>
 <form action="" method="get">
 <select name="ch">
 <?php
@@ -47,7 +77,10 @@ foreach($chs as $k=>$v){
 ?>
 </select>
 <input type="submit" value="Velg" />
-<input name="off" type="submit" value="Av" />
+<input name="off" type="submit" value="Av" /><br/>
+<input name="browse" type="submit" value="prev" />
+<input name="browse" type="submit" value="next" />
 </form>
+<a href="?browse=next">Next</a> <a href="?browse=prev">Prev</a> 
 </body></html>
 
