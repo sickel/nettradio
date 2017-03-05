@@ -1,4 +1,3 @@
-#!/usr/bin/python
 # Copyright (c) 2014 Adafruit Industries
 # Author: Tony DiCola
 #
@@ -21,7 +20,6 @@
 # THE SOFTWARE.
 
 import time
-import codecs
 
 import Adafruit_Nokia_LCD as LCD
 import Adafruit_GPIO.SPI as SPI
@@ -64,44 +62,44 @@ disp = LCD.PCD8544(DC, RST, spi=SPI.SpiDev(SPI_PORT, SPI_DEVICE, max_speed_hz=40
 # Software SPI usage (defaults to bit-bang SPI interface):
 #disp = LCD.PCD8544(DC, RST, SCLK, DIN, CS)
 
-
-def getlast():
-  "Get last text of interest from mp3 output"
-  lastline=''
-  f=codecs.open('/tmp/radiotitle',encoding="utf-8")
-  for line in iter(f):
-    if len(line) > 1:
-       lastline=line
-  splt=lastline.split('=')
-  print(splt)
-  return splt[1].strip("'")
-
-
 # Initialize library.
 disp.begin(contrast=60)
 
 # Clear display.
 disp.clear()
 disp.display()
+
+# Create blank image for drawing.
+# Make sure to create image with mode '1' for 1-bit color.
+image = Image.new('1', (LCD.LCDWIDTH, LCD.LCDHEIGHT))
+
+# Get drawing object to draw on image.
+draw = ImageDraw.Draw(image)
+
+# Draw a white filled box to clear the image.
+draw.rectangle((0,0,LCD.LCDWIDTH,LCD.LCDHEIGHT), outline=255, fill=255)
+
+# Draw some shapes.
+draw.ellipse((2,2,22,22), outline=0, fill=255)
+draw.rectangle((24,2,44,22), outline=0, fill=255)
+draw.polygon([(46,22), (56,2), (66,22)], outline=0, fill=255)
+draw.line((68,22,81,2), fill=0)
+draw.line((68,2,81,22), fill=0)
+
+# Load default font.
 font = ImageFont.load_default()
 
-def showtext():
-  # Create blank image for drawing.
-  # Make sure to create image with mode '1' for 1-bit color.
-  image = Image.new('1', (LCD.LCDWIDTH, LCD.LCDHEIGHT))
-  # Get drawing object to draw on image.
-  draw = ImageDraw.Draw(image)
-  # Draw a white filled box to clear the image.
-  draw.rectangle((0,0,LCD.LCDWIDTH,LCD.LCDHEIGHT), outline=255, fill=255)
+# Alternatively load a TTF font.
+# Some nice fonts to try: http://www.dafont.com/bitmap.php
+# font = ImageFont.truetype('Minecraftia.ttf', 8)
 
-  # Write some text.
-  draw.text((1,30),getlast(), font=font)
-  #draw.text((6,8), 'test 2 - 6,8', font=font)
-  # Display image.
-  disp.image(image)
-  disp.display()
+# Write some text.
+draw.text((8,30), 'Hello World!', font=font)
+
+# Display image.
+disp.image(image)
+disp.display()
 
 print 'Press Ctrl-C to quit.'
 while True:
-   showtext()
-   time.sleep(5)
+	time.sleep(1.0)
