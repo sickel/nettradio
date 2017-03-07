@@ -97,7 +97,7 @@ def showtext():
   draw = ImageDraw.Draw(image)
   # Draw a white filled box to clear the image.
   draw.rectangle((0,0,LCD.LCDWIDTH,LCD.LCDHEIGHT), outline=255, fill=255)
-  ch="/var/www/html/ch.txt"
+  ch="/var/www/html/ch2.txt"
   try:
     f=codecs.open(ch,encoding="utf-8")
     chname=f.readline()
