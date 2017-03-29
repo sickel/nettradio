@@ -24,7 +24,7 @@ import time
 import codecs
 from mikezlcd import *
 lcd = lcd_module(2004, 17, 4, 25, 24, 23,22)
-lcd.disp(0,3,"<-     ->       off")
+lcd.disp(0,3,"<-     ->       off ")
 clearline="                    "
 
 
@@ -56,15 +56,15 @@ def showtext():
   except:
     chname=""
   lcd.disp(0,0,clearline)
-  lcd.disp(0,0,chname)
+  lcd.disp(0,0,chname[:20])
   txt=getlast().split('med')
   # Write some text.
   lcd.disp(0,1,clearline)
-  lcd.disp(0,1,txt[0])
+  lcd.disp(0,1,txt[0][:20])
   lcd.disp(0,2,clearline)
   if len(txt) > 1:
      txt[1].strip(" ") 
-     lcd.disp(0,2,txt[1])
+     lcd.disp(0,2,txt[1][:20])
 
 print 'Press Ctrl-C to quit.'
 while True:
