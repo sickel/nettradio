@@ -22,47 +22,10 @@
 
 import time
 import codecs
-
-import Adafruit_Nokia_LCD as LCD
-import Adafruit_GPIO.SPI as SPI
-
-from PIL import Image
-from PIL import ImageDraw
-from PIL import ImageFont
-
-
-# Raspberry Pi hardware SPI config:
-DC = 23
-RST = 24
-SPI_PORT = 0
-SPI_DEVICE = 0
-
-# Raspberry Pi software SPI config:
-# SCLK = 4
-# DIN = 17
-# DC = 23
-# RST = 24
-# CS = 8
-
-# Beaglebone Black hardware SPI config:
-# DC = 'P9_15'
-# RST = 'P9_12'
-# SPI_PORT = 1
-# SPI_DEVICE = 0
-
-# Beaglebone Black software SPI config:
-# DC = 'P9_15'
-# RST = 'P9_12'
-# SCLK = 'P8_7'
-# DIN = 'P8_9'
-# CS = 'P8_11'
-
-
-# Hardware SPI usage:
-disp = LCD.PCD8544(DC, RST, spi=SPI.SpiDev(SPI_PORT, SPI_DEVICE, max_speed_hz=4000000))
-
-# Software SPI usage (defaults to bit-bang SPI interface):
-#disp = LCD.PCD8544(DC, RST, SCLK, DIN, CS)
+from mikezlcd import *
+lcd = lcd_module(2004, 17, 4, 25, 24, 23,22)
+lcd.disp(0,3,"<-     ->       off")
+clearline="                    "
 
 
 def getlast():
@@ -73,49 +36,38 @@ def getlast():
     for line in iter(f):
       if len(line) > 1:
          lastline=line
+    lastline=lastline[:-3]
     splt=lastline.split('=')
 #  print(splt)
     if len(splt)>0:
+       
       return splt[1].strip("'")
   except:
      lastline=""
   return(lastline)
 
-# Initialize library.
-disp.begin(contrast=60)
 
-# Clear display.
-disp.clear()
-disp.display()
-#font = ImageFont.load_default()
-font = ImageFont.truetype('Economica-Regular-OTF.ttf', 11)
 def showtext():
-  # Create blank image for drawing.
-  # Make sure to create image with mode '1' for 1-bit color.
-  image = Image.new('1', (LCD.LCDWIDTH, LCD.LCDHEIGHT))
-  # Get drawing object to draw on image.
-  draw = ImageDraw.Draw(image)
-  # Draw a white filled box to clear the image.
-  draw.rectangle((0,0,LCD.LCDWIDTH,LCD.LCDHEIGHT), outline=255, fill=255)
+  
   ch="/var/www/html/ch2.txt"
   try:
     f=codecs.open(ch,encoding="utf-8")
     chname=f.readline()
   except:
     chname=""
-  draw.text((1,1),chname,font=font)
+  lcd.disp(0,0,clearline)
+  lcd.disp(0,0,chname)
   txt=getlast().split('med')
   # Write some text.
-  draw.text((1,20),txt[0], font=font)
+  lcd.disp(0,1,clearline)
+  lcd.disp(0,1,txt[0])
+  lcd.disp(0,2,clearline)
   if len(txt) > 1:
-     txt[1].strip(" ")
-     draw.text((1,30),txt[1], font=font)
-  #draw.text((6,8), 'test 2 - 6,8', font=font)
-  # Display image.
-  disp.image(image)
-  disp.display()
+     txt[1].strip(" ") 
+     lcd.disp(0,2,txt[1])
 
 print 'Press Ctrl-C to quit.'
 while True:
+   lcd.disp(0,3,"<-     ->       off")
    showtext()
    time.sleep(5)
