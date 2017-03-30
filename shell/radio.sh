@@ -14,3 +14,7 @@ if [ $1 != "off" ]; then
    mpg123 $url &> /tmp/radiotitle &
    echo $! > $pidfile
 fi
+
+if [ $1 == "off"]; then
+   rm /tmp/radiotitle
+fi

@@ -29,6 +29,7 @@ while True:
     #call(["wget","-q -O /dev/null localhost/radio.php?browse=next"],shell=True)
   prev10=in10
   if(in11 and in11!=prev11):
-     print("Button 11 pressed - off")
+    print("Button 11 pressed - off")
+    urllib2.urlopen("http://localhost/radio.php?off=Av")
   prev11=in11
   time.sleep(0.05)
