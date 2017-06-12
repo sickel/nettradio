@@ -15,6 +15,6 @@ if [ $1 != "off" ]; then
    echo $! > $pidfile
 fi
 
-if [ $1 == "off"]; then
+if [ $1 == "off" ]; then
    rm /tmp/radiotitle
 fi
