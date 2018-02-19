@@ -7,6 +7,7 @@
 <?php
 
 $file='ch.txt';
+$file2='ch2.txt';
 //print_r($_GET);
 $chs=array(
 'p1'=>array('NRK P1','http://lyd.nrk.no/nrk_radio_p1_ostlandssendingen_mp3_h'),
@@ -60,6 +61,9 @@ if(array_key_exists($ch,$chs)){
   `/usr/local/bin/radio.sh $stream`;
   $f=fopen($file,"w");
   fwrite($f,$ch);
+  fclose($f);
+  $f=fopen($file2,"w");
+  fwrite($f,$chs[$ch][0]." ");
   fclose($f);
 }
 if(array_key_exists('off',$_GET) && $_GET['off']=='Av'){
