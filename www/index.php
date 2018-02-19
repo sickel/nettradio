@@ -1,5 +1,7 @@
 <html><head><title>Nettradio</title>
+<script type="text/javascript" src="radio.js"></script>
 <meta name="viewport" content="width=device-width, initial-scale=1"></head>
+
 <body><br />
 
 <?php
@@ -82,5 +84,6 @@ foreach($chs as $k=>$v){
 
 <a href="?browse=prev">Forrige</a> 
 <a href="?browse=next">Neste</a>  
+<p id="radiotext"> </p>
 </body></html>
 
