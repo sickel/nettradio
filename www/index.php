@@ -79,6 +79,8 @@ foreach($chs as $k=>$v){
 <input type="submit" value="Velg" />
 <input name="off" type="submit" value="Av" />
 </form>
-<a href="?browse=next">Neste</a> <a href="?browse=prev">Forrige</a> 
+
+<a href="?browse=prev">Forrige</a> 
+<a href="?browse=next">Neste</a>  
 </body></html>
 
