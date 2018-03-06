@@ -71,7 +71,7 @@ if(array_key_exists('off',$_GET) && $_GET['off']=='Av'){
 }
 ?>
 <form action="" method="get">
-<select name="ch">
+<select name="ch" id ="chselector">
 <?php
 foreach($chs as $k=>$v){
     $sel="";

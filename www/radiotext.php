@@ -1,4 +1,9 @@
 <?php
+
+if($_GET['kanal']=='kanal'){
+	returnkanal();
+}
+
 $line = '';
 $file='/tmp/radiotitle';
 
@@ -30,5 +35,14 @@ while ($char !== false && $char !== "\n" && $char !== "\r") {
 $exp=explode('=',$line,2);
 $line=ltrim($exp[1],"'");
 $line=rtrim($line,"';");
-echo $line;
+
+$ret->text=$line;
+
+$file = fopen('/var/www/html/ch.txt',"r");
+$ret->ch = fgets($file);
+
+echo json_encode($ret);
+
+
+
 ?>
