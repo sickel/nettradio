@@ -1,5 +1,5 @@
 #!/bin/bash
-
+path=/usr/bin:/bin
 url=$1
 pidfile=/tmp/radiopid
 
@@ -10,11 +10,7 @@ then
    rm $pidfile
 fi
 
-if [ $1 != "off" ]; then
+if [ $url != "off" ]; then
    mpg123 $url &> /tmp/radiotitle &
    echo $! > $pidfile
-fi
-
-if [ $1 == "off" ]; then
-   rm /tmp/radiotitle
 fi
