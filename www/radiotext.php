@@ -41,6 +41,10 @@ $ret->text=$line;
 $file = fopen('/var/www/html/ch.txt',"r");
 $ret->ch = fgets($file);
 
+$amix=`/usr/bin/amixer -M`;
+preg_match('/\[([0-9]+)%\]/',$amix,$vol);
+$ret->vol=$vol[1];
+
 echo json_encode($ret);
 
 
