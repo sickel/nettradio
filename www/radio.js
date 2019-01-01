@@ -17,9 +17,14 @@ function xmlhttpPost(strURL) {
             var ret = JSON.parse(self.xmlHttpReq.responseText);         
             updatepage(ret.text);
             updatedropdown(ret.ch);
+            updatevolume(ret.vol);
         }
     }
     self.xmlHttpReq.send();
+}
+
+function updatevolume(str){
+    document.getElementById("volumevalue").innerHTML = str;
 }
 
 function updatepage(str){
