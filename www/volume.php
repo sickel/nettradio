@@ -1,6 +1,6 @@
 <?php
 
-
+$amix="/usr/bin/amixer"
 $step='5%';
 $adj='nonset';
 
@@ -11,20 +11,18 @@ if (isset($_GET)){
     }
 }
 
-
 if ($adj=='up'){
     $adjust="${step}+";}
 else {
     $adjust="${step}-";}
-# print($adjust);
+
 $ch="'PCM'";
 
-$amx="/usr/bin/amixer set $ch $adjust -M"; 
+$amx="$amix set $ch $adjust -M"; 
 
 $output=`$amx`;
 preg_match('/\[([0-9]+)%\]/',$output,$vol);
 $ret->vol=$vol[1];
 echo json_encode($ret);
-
 
 ?>

@@ -9,17 +9,17 @@
 $file='ch.txt';
 $file2='ch2.txt';
 //print_r($_GET);
-$chs=array(
-'p1'=>array('NRK P1','http://lyd.nrk.no/nrk_radio_p1_ostlandssendingen_mp3_h'),
-'p2'=>array('NRK P2','http://lyd.nrk.no/nrk_radio_p2_mp3_h'),
-'p3'=>array('NRK P3','http://lyd.nrk.no/nrk_radio_p3_mp3_h'),
-'p13'=>array('NRK P13','http://lyd.nrk.no/nrk_radio_p13_mp3_h'),
-'p1pluss'=>array('NRK P1+','http://lyd.nrk.no/nrk_radio_p1pluss_mp3_h'),
-'jazz'=>array('NRK alltid jazz','http://lyd.nrk.no/nrk_radio_jazz_mp3_h'),
-'klassisk'=>array('NRK alltid klassisk','http://lyd.nrk.no/nrk_radio_klassisk_mp3_h'),
-'nyheter'=>array('NRK alltid nyheter','http://lyd.nrk.no/nrk_radio_alltid_nyheter_mp3_h'),
-'mp3'=>array('NRK mp3','http://lyd.nrk.no/nrk_radio_mp3_mp3_h')
-);
+$chs=array();
+$file = fopen("stationlist.txt", "r") or exit("Unable to open file!");
+while(!feof($file))
+//Output a line of the file until the end is reached
+  {
+    $line=fgets($file);
+    $list=explode(",",$line);
+    if($list[0]){
+        $chs[$list[0]]=[$list[1],$list[2]];}
+  }
+fclose($file);
 $ch='';
 if(array_key_exists('ch',$_GET)){
     $ch=$_GET['ch'];
