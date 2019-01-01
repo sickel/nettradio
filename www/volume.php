@@ -7,7 +7,7 @@ $adj='nonset';
 if (isset($_GET)){
     $adj='down';
     if ($_GET['adjust']=='up'){
-        adj='up';
+        $adj='up';
     }
 }
 
