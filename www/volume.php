@@ -1,6 +1,6 @@
 <?php
 
-$amix="/usr/bin/amixer"
+$amix="/usr/bin/amixer";
 $step='5%';
 $adj='nonset';
 
