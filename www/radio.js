@@ -5,6 +5,10 @@ xmlhttpPost(strURL);
 
 var intervalID = setInterval(function(){xmlhttpPost(strURL);}, 5000);
 
+window.onload = function(e) {
+    document.getElementById("down").addEventListener("click", changevolume);
+    document.getElementById("up").addEventListener("click", changevolume);
+} 
 
 function xmlhttpPost(strURL) {
     var xmlHttpReq = false;
@@ -35,4 +39,13 @@ function updatepage(str){
 function updatedropdown(str){
    var element = document.getElementById('chselector');
    element.value = str;
+}
+
+function changevolume(){
+    adjust=this.id;
+    url="volume.php?adjust="+adjust;
+    var self = this;
+    self.xmlHttpReq = new XMLHttpRequest();
+    self.xmlHttpReq.open('GET', url, true);
+    self.xmlHttpReq.send();
 }
