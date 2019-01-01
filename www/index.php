@@ -3,8 +3,6 @@
 <meta name="viewport" content="width=device-width, initial-scale=1"></head>
 <body><br />
 <?php
-$file='ch.txt'; 
-$file2='ch2.txt';
 $chs=array();
 # Reading in stations from file:
 $file = fopen("stationlist.txt", "r") or exit("Unable to open file!");
@@ -12,11 +10,15 @@ while(!feof($file))
   {
     $line=fgets($file);
     $list=explode(",",$line);
-    if(count($line)==3 && $list[0]){
+    
+    if($list[1]>""){
         $chs[$list[0]]=[$list[1],$list[2]];}
   }
-fclose($file);
 
+fclose($file);
+print_r($chs);
+$file='ch.txt'; 
+$file2='ch2.txt';
 $ch='';
 if(array_key_exists('ch',$_GET)){
     $ch=$_GET['ch'];
