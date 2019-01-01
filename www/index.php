@@ -89,5 +89,7 @@ foreach($chs as $k=>$v){
 <a href="?browse=prev">Forrige</a> 
 <a href="?browse=next">Neste</a>  
 <p id="radiotext"> </p>
+<p>
+<span id="volume">0</span> <button id="down" class="volbutton">-</button><button id="up" class="volbutton">+</button>
 </body></html>
 
