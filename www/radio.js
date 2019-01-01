@@ -8,6 +8,7 @@ var intervalID = setInterval(function(){xmlhttpPost(strURL);}, 5000);
 window.onload = function(e) {
     document.getElementById("down").addEventListener("click", changevolume);
     document.getElementById("up").addEventListener("click", changevolume);
+    xmlhttpPost(strURL);
 } 
 
 function xmlhttpPost(strURL) {
