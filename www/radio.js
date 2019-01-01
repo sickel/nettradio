@@ -47,5 +47,11 @@ function changevolume(){
     var self = this;
     self.xmlHttpReq = new XMLHttpRequest();
     self.xmlHttpReq.open('GET', url, true);
+    self.xmlHttpReq.onreadystatechange = function() {
+        if (self.xmlHttpReq.readyState == 4) {
+            var ret = JSON.parse(self.xmlHttpReq.responseText);         
+            updatevolume(ret.vol);
+        }
+    }
     self.xmlHttpReq.send();
 }

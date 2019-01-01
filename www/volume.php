@@ -22,7 +22,9 @@ $ch="'PCM'";
 $amx="/usr/bin/amixer set $ch $adjust -M"; 
 
 $output=`$amx`;
-# preg_match('/\[([0-9]+)%\]/',$output,$vol);
-# print_r($vol);
-# print($output);
+preg_match('/\[([0-9]+)%\]/',$output,$vol);
+$ret->vol=$vol[1];
+echo json_encode($ret);
+
+
 ?>
