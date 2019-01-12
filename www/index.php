@@ -16,13 +16,14 @@ while(!feof($file))
   }
 
 fclose($file);
-print_r($chs);
 $file='ch.txt'; 
 $file2='ch2.txt';
 $ch='';
+$running=file_exists('/tmp/radiopid');
 if(array_key_exists('ch',$_GET)){
     $ch=$_GET['ch'];
 }else{
+   
    $f=fopen($file,"r");
    if($f){
      $ch=fread($f,filesize($file));
@@ -59,7 +60,8 @@ if(array_key_exists($ch,$chs)){
   fwrite($f,$chs[$ch][0]." ");
   fclose($f);
 }
-if(array_key_exists('off',$_GET) && $_GET['off']=='Av'){
+if(array_key_exists('off',$_GET) && $_GET['off']=='Av' && $running) {
+	
 	`/usr/local/bin/radio.sh off`;	
 }
 ?>
