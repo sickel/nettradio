@@ -21,9 +21,6 @@ mpg123 must be installed and in path
 
 make sure that no other user has created the files /tmp/radiopid and /tmp/radiotitle
 
-
-Only www/radio.php and shell/radio.sh is needed for remote control operation
-
 To use hardware buttons and display, use buttons.py and texttest.py. 
 For conncections of buttons, see https://www.cl.cam.ac.uk/projects/raspberrypi/tutorials/robot/buttons_and_switches/ 
 
@@ -33,3 +30,19 @@ The buttons should be connected so the port is low when the button is open. They
 For display, see https://www.algissalys.com/how-to/nokia-5110-lcd-on-raspberry-pi
 
 The channels are listed in stationlist.txt, each line in the file should consist of three items, separated by , (comma): Unique id,Name (shown in the web interface), url to mp3 stream
+
+
+==Installation==
+
+On a pi without any buttons or display:
+
+sudo make installpi
+
+On a pi with buttons:
+
+sudo make install
+
+
+Software for display still needs to be installed manually as I am presently not testing it - 
+
+
