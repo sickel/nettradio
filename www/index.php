@@ -29,7 +29,7 @@ if(array_key_exists('ch',$_GET)){
      $ch=fread($f,filesize($file));
      fclose($f);
    }
-   if(array_key_exists('browse',$_GET)){
+   if(array_key_exists('browse',$_GET) && $running){
       $keys=array_keys($chs);
       $idx=array_search($ch,$keys);
       if($idx===false){
@@ -61,7 +61,6 @@ if(array_key_exists($ch,$chs)){
   fclose($f);
 }
 if(array_key_exists('off',$_GET) && $_GET['off']=='Av' && $running) {
-	
 	`/usr/local/bin/radio.sh off`;	
 }
 ?>
