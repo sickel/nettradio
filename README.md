@@ -26,8 +26,10 @@ Only www/radio.php and shell/radio.sh is needed for remote control operation
 
 To use hardware buttons and display, use buttons.py and texttest.py. 
 For conncections of buttons, see https://www.cl.cam.ac.uk/projects/raspberrypi/tutorials/robot/buttons_and_switches/ 
-connect one button to GPIO17 and one to GPIO22
+
+The buttons should be connected so the port is low when the button is open. They are connected to GPIO9 (next channel), GPIO10 (previous channel) and GPIO11 (off).
+
 
 For display, see https://www.algissalys.com/how-to/nokia-5110-lcd-on-raspberry-pi
 
-
+The channels are listed in stationlist.txt, each line in the file should consist of three items, separated by , (comma): Unique id,Name (shown in the web interface), url to mp3 stream
