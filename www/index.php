@@ -17,7 +17,6 @@ while(!feof($file))
 
 fclose($file);
 $file='ch.txt'; 
-$file2='ch2.txt';
 $ch='';
 
 # Need to check afterwards if the radio already is running - hadling of browsing and off
@@ -59,9 +58,6 @@ if(array_key_exists($ch,$chs)){
   `/usr/local/bin/radio.sh $stream`;
   $f=fopen($file,"w");
   fwrite($f,$ch);
-  fclose($f);
-  $f=fopen($file2,"w");
-  fwrite($f,$chs[$ch][0]." ");
   fclose($f);
 }
 if(array_key_exists('off',$_GET) && $_GET['off']=='Av' && $running) {
