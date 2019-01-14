@@ -19,11 +19,15 @@ fclose($file);
 $file='ch.txt'; 
 $file2='ch2.txt';
 $ch='';
+
+# Need to check afterwards if the radio already is running - hadling of browsing and off
 $running=file_exists('/tmp/radiopid');
+
+
 if(array_key_exists('ch',$_GET)){
     $ch=$_GET['ch'];
 }else{
-   
+# if no channels sent in, check if one has been active:   
    $f=fopen($file,"r");
    if($f){
      $ch=fread($f,filesize($file));
