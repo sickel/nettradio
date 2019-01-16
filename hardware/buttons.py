@@ -34,5 +34,5 @@ while True:
         print("Button {} pressed - {}").format(btn,bt[btn])
       else:
         urllib2.urlopen(url+bt[btn])
-      prevval[btn]=value
+    prevval[btn]=value
   time.sleep(0.05) # Debouncing
