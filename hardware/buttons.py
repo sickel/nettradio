@@ -1,45 +1,38 @@
 #!/usr/bin/python
-
+  
 import time
 import urllib2
 import RPi.GPIO as GPIO
 
 # TODO - use internal pulldowns or pullups and adjust code if needed
+bt= {}
+prevval={}
 
-btnext=9
-btback=10
-btoff=11
+
+bt[9]='browse=next'
+bt[10]='browse=prev'
+bt[11]='off=Av'
 
 GPIO.setmode(GPIO.BCM)
-GPIO.setup(btnext,GPIO.IN)
-GPIO.setup(btback,GPIO.IN)
-GPIO.setup(btoff,GPIO.IN)
+for btn in bt:
+  GPIO.setup(btn,GPIO.IN)
+  prevval[btn]=0
+  
+debug=False
 
-debug=True
+url="http://localhost/index.php?"
 
-prevnext=1
-prevback=1
-prevoff=1
-url="http://localhost/index.php"
 if debug:
   print "Ready"
 while True:
-  innext=GPIO.input(btnext)
-  inback=GPIO.input(btback)
-  inoff=GPIO.input(btoff)
-  if(innext and innext!=prevnext):
-    if debug:
-        print("Button 9 pressed - next")
-    urllib2.urlopen(url+"?browse=next")
-  prevnext=innext
-  if(inback and inback!=prevback):
-    if debug:
-      print("Button 10 pressed - prev")
-    urllib2.urlopen(url+"?browse=prev")
-  prevback=inback
-  if(inoff and inoff!=prevoff):
-    if debug:
-      print("Button 11 pressed - off")
-    urllib2.urlopen("http://localhost/radio.php?off=Av")
-  prevoff=inoff
+  for btn in bt:
+    value=GPIO.input(btn)
+    if value:
+      print btn,value
+    if(value and value!=prevval[btn]):
+      if debug:
+        print("Button {} pressed - {}").format(btn,bt[btn])
+      else:
+        urllib2.urlopen(url+bt[btn])
+      prevval[btn]=value
   time.sleep(0.05) # Debouncing
