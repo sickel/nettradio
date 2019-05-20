@@ -3,7 +3,7 @@ WWWDIR=/var/www/html
 
 install: installpi installbuttons
 	addgroup www-data audio
-	apt install mpg123
+	apt install mpg123 apache2 php
 	
 installpi: installwww installsh
 
