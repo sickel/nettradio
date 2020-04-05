@@ -53,7 +53,7 @@ if(array_key_exists('ch',$_POST)){
    }
 }
 
-if(array_key_exists($ch,$chs)){
+if(count($_POST) + count($_GET) > 0 and array_key_exists($ch,$chs)){
   $stream=$chs[$ch][1];
   `/usr/local/bin/radio.sh $stream`;
   $f=fopen($file,"w");
