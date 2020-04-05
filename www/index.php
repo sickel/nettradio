@@ -23,8 +23,8 @@ $ch='';
 $running=file_exists('/tmp/radiopid');
 
 
-if(array_key_exists('ch',$_GET)){
-    $ch=$_GET['ch'];
+if(array_key_exists('ch',$_POST)){
+    $ch=$_POST['ch'];
 }else{
 # if no channels sent in, check if one has been active:   
    $f=fopen($file,"r");
@@ -60,11 +60,15 @@ if(array_key_exists($ch,$chs)){
   fwrite($f,$ch);
   fclose($f);
 }
+if(array_key_exists('off',$_POST) && $_POST['off']=='Av' && $running) {
+	`/usr/local/bin/radio.sh off`;	
+}
 if(array_key_exists('off',$_GET) && $_GET['off']=='Av' && $running) {
 	`/usr/local/bin/radio.sh off`;	
 }
+
 ?>
-<form action="" method="get">
+<form action="" method="post">
 <select name="ch" id ="chselector">
 <?php
 foreach($chs as $k=>$v){
