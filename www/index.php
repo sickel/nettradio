@@ -23,6 +23,7 @@ $ch='';
 $running=file_exists('/tmp/radiopid');
 
 
+
 if(array_key_exists('ch',$_POST)){
     $ch=$_POST['ch'];
 }else{
@@ -52,6 +53,8 @@ if(array_key_exists('ch',$_POST)){
      }
    }
 }
+
+unset($_GET['ch']); # Should not be used
 
 if(count($_POST) + count($_GET) > 0 and array_key_exists($ch,$chs)){
   $stream=$chs[$ch][1];
