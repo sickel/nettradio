@@ -1,0 +1,10 @@
+[Unit]
+Description=Buttoncontroller
+After=network.target
+
+[Service]
+ExecStart=/usr/local/bin/runbuttons
+Restart=on-failure
+
+[Install]
+WantedBy=multi-user.target
