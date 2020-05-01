@@ -15,7 +15,7 @@ prevval={}
 
 bt[9]='browse=next'
 bt[10]='browse=prev'
-bt[11]='off=Av'
+bt[11]='off=Toggle'
 
 GPIO.setmode(GPIO.BCM)
 for btn in bt:
@@ -36,4 +36,4 @@ def read_buttons():
         else:
           urllib2.urlopen(url+bt[btn])
       prevval[btn]=value
-    time.sleep(0.05) # Debouncing
+    time.sleep(0.1) # Debouncing
