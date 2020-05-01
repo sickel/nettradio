@@ -3,7 +3,14 @@
 <meta name="viewport" content="width=device-width, initial-scale=1"></head>
 <style>
 body {
-  background-color: linen;
+  background-color: #CCCCCC;
+}
+#radiotext{
+  padding: 10px;
+  font-family: sans-serif;
+  background-color: #FFFFFF;
+  max-width: 300px;
+  min-height: 44px;
 }
 
 </style>
