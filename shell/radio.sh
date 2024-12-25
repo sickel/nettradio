@@ -11,6 +11,6 @@ then
 fi
 
 if [ $url != "off" ]; then
-   mpg123 $url &> /tmp/radiotitle &
+   mpg123 $url &> ~/radiotitle &
    echo $! > $pidfile
 fi

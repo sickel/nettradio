@@ -8,8 +8,17 @@ var intervalID = setInterval(function(){xmlhttpPost(strURL);}, 5000);
 window.onload = function(e) {
     document.getElementById("down").addEventListener("click", changevolume);
     document.getElementById("up").addEventListener("click", changevolume);
+    document.getElementById("popout").addEventListener("click",popout);
     xmlhttpPost(strURL);
-} 
+}
+
+function popout(){
+    window.open("", "_self");
+    window.open("http://radio.hhv3", "nettradio","height=230,width=350,menubar=no,location=no,toolbar=no,left=100,top=100");
+    return(false);
+}
+
+
 
 function xmlhttpPost(strURL) {
     var xmlHttpReq = false;
@@ -19,7 +28,7 @@ function xmlhttpPost(strURL) {
     self.xmlHttpReq.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
     self.xmlHttpReq.onreadystatechange = function() {
         if (self.xmlHttpReq.readyState == 4) {
-            var ret = JSON.parse(self.xmlHttpReq.responseText);         
+            var ret = JSON.parse(self.xmlHttpReq.responseText);
             updatepage(ret.text);
             updatedropdown(ret.ch);
             updatevolume(ret.vol);

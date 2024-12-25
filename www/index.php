@@ -11,6 +11,7 @@ body {
   background-color: #FFFFFF;
   max-width: 300px;
   min-height: 44px;
+  font-size: 12px;
 }
 
 </style>
@@ -105,7 +106,7 @@ foreach($chs as $k=>$v){
 </select>
 
 <input type="submit" value="Velg" />
-<input name="off" type="submit" value="Av" /><br />
+<input name="off" type="submit" value="Av" /><button id="popout">&#8599;</button><br />
 </form><form method="post">
 <button name="browse" value="prev">&lt;--</button>
 <button name="browse" value="next">--&gt;</button>
