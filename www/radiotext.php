@@ -1,11 +1,16 @@
 <?php
 
+class returndata{}
+
+$ret = new returndata;
+
+if(array_key_exists('kanal',$_GET)){
 if($_GET['kanal']=='kanal'){
 	returnkanal();
 }
-
+}
 $line = '';
-$file='/tmp/radiotitle';
+$file='/var/www/radiotitle';
 
 $f = fopen($file , 'r');
 $cursor = -1;
@@ -35,7 +40,6 @@ while ($char !== false && $char !== "\n" && $char !== "\r") {
 $exp=explode('=',$line,2);
 $line=ltrim($exp[1],"'");
 $line=rtrim($line,"';");
-
 $ret->text=$line;
 
 $file = fopen('/var/www/html/ch.txt',"r");

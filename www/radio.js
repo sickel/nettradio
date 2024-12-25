@@ -28,7 +28,8 @@ function xmlhttpPost(strURL) {
     self.xmlHttpReq.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
     self.xmlHttpReq.onreadystatechange = function() {
         if (self.xmlHttpReq.readyState == 4) {
-            var ret = JSON.parse(self.xmlHttpReq.responseText);
+            var response = self.xmlHttpReq.responseText;
+            var ret = JSON.parse(response);
             updatepage(ret.text);
             updatedropdown(ret.ch);
             updatevolume(ret.vol);
