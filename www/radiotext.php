@@ -37,9 +37,11 @@ while ($char !== false && $char !== "\n" && $char !== "\r") {
     fseek($f, $cursor--, SEEK_END);
     $char = fgetc($f);
 }
-$exp=explode('=',$line,2);
-$line=ltrim($exp[1],"'");
-$line=rtrim($line,"';");
+if(str_contains('=',$line)){
+    $exp=explode('=',$line,2);
+    $line=ltrim($exp[1],"'");
+    $line=rtrim($line,"';");
+}
 $ret->text=$line;
 
 $file = fopen('/var/www/html/ch.txt',"r");
