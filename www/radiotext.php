@@ -10,6 +10,7 @@ if($_GET['kanal']=='kanal'){
 }
 }
 $line = '';
+$rettext = '';
 $file='/var/www/radiotitle';
 
 $f = fopen($file , 'r');
@@ -37,12 +38,15 @@ while ($char !== false && $char !== "\n" && $char !== "\r") {
     fseek($f, $cursor--, SEEK_END);
     $char = fgetc($f);
 }
-if(str_contains('=',$line)){
+if(str_contains($line,'=')){
     $exp=explode('=',$line,2);
     $line=ltrim($exp[1],"'");
-    $line=rtrim($line,"';");
+    $rettext=rtrim($line,"';");
+}elseif(str_contains($line,':')){
+    $exp=explode(':',$line,2);
+    $rettext=$exp[1];
 }
-$ret->text=$line;
+$ret->text=$rettext;
 
 $file = fopen('/var/www/html/ch.txt',"r");
 $ret->ch = fgets($file);

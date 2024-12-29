@@ -1,7 +1,7 @@
 #!/bin/bash
 path=/usr/bin:/bin
 url=$1
-pidfile=/tmp/radiopid
+pidfile=~/radiopid
 
 
 if [ -f $pidfile ];
@@ -11,6 +11,6 @@ then
 fi
 
 if [ $url != "off" ]; then
-   mpg123 $url &> ~/radiotitle &
+   mpg123 -o alsa  $url 2> ~/radiotitle &
    echo $! > $pidfile
 fi

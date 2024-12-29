@@ -23,10 +23,12 @@ $file = fopen("stationlist.txt", "r") or exit("Unable to open file!");
 while(!feof($file))
   {
     $line=fgets($file);
-    $list=explode(",",$line);
+    if (str_contains($line,',')){
+      $list=explode(",",$line);
     
-    if($list[1]>""){
+      if($list[1]>""){
         $chs[$list[0]]=[$list[1],$list[2]];}
+    }
   }
 
 fclose($file);
