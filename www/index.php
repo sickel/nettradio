@@ -79,7 +79,7 @@ if(array_key_exists('off',$_GET) and $_GET['off']=='Av'){
 
 if(count($_POST) + count($_GET) > 0 and array_key_exists($ch,$chs)){
   $stream=$chs[$ch][1];
-  `/usr/local/bin/radio.sh $stream`;
+  shell_exec(sprintf('%s > /dev/null 2>&1 &',  "/usr/local/bin/radio.sh $stream"));
   $f=fopen($file,"w");
   fwrite($f,$ch);
   fclose($f);
