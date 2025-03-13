@@ -28,15 +28,31 @@ def create_app(test_config=None):
     except OSError:
         pass
 
-    # a simple page that says hello
-    @app.route('/hello')
-    def hello():
-        return 'Hello, World!'
-    
+    filename = 'flaskradio/stationlist.txt'
+
+    with open(filename,'r') as listfile:
+        lines = listfile.readlines()
+    app.stationlist = {}
+    for line in lines:
+        line = line.strip()
+        (key,name,url) = line.split(',')
+        app.stationlist[key] = {'name':name ,'url': url}
+
+
+    @app.route('/radiotext')
+    def radiotext():
+        return 'OK'
+
 
     @app.route('/', methods=('GET', 'POST'))
     def radiopage():
-        return render_template('templates/Nettradio.html')
+        if request.method == 'POST':
+            ch = request.form.get('ch')
+            if not ch is None:
+                url = app.stationlist[ch]['url']
+                print(url)
+                os.system(f'/usr/local/bin/radio.sh {url}')
+        return render_template('Nettradio.html', channellist=app.stationlist, activech = ch)
 
 
 
