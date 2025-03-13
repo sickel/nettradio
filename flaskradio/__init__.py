@@ -14,6 +14,8 @@ def create_app(test_config=None):
         SECRET_KEY='dev',
         DATABASE=os.path.join(app.instance_path, 'flaskr.sqlite'),
     )
+    app.radioscript = '/usr/local/bin/radio.sh'
+
 
     if test_config is None:
         # load the instance config, if it exists, when not testing
@@ -46,12 +48,20 @@ def create_app(test_config=None):
 
     @app.route('/', methods=('GET', 'POST'))
     def radiopage():
+        ch = None
         if request.method == 'POST':
-            ch = request.form.get('ch')
-            if not ch is None:
+           off = request.form.get('off')
+           if not off is None:
+               os.system(f'{app.radioscript} off')
+           else: 
+             ch = request.form.get('ch')
+             if not ch is None:
                 url = app.stationlist[ch]['url']
-                print(url)
-                os.system(f'/usr/local/bin/radio.sh {url}')
+                os.system(f'{app.radioscript} {url}')
+                off = request.form.get('off')
+                if not off is None:
+                    os.system('{app.radioscript} off')
+
         return render_template('Nettradio.html', channellist=app.stationlist, activech = ch)
 
 
