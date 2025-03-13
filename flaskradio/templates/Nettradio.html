@@ -19,7 +19,7 @@ body {
 <form action="" method="post">
 <select name="ch" id ="chselector">
 {% for ch in channellist %}
-<option value="{{ch}}">{{channellist[ch]['name']}}</option>
+<option value="{{ch}}"{% if ch == activech %} selected="selected"{% endif %}>{{channellist[ch]['name']}} </option>
 {% endfor %}
 </select>
 <input type="submit" value="Velg" />
