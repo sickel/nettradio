@@ -1,5 +1,5 @@
 <html><head><title>Nettradio</title>
-<script type="text/javascript" src="radio.js"></script>
+<script type="text/javascript" src="{{url_for('static', filename='radio.js')}}"></script>
 <meta name="viewport" content="width=device-width, initial-scale=1"></head>
 <style>
 body {
@@ -18,18 +18,10 @@ body {
 <body>
 <form action="" method="post">
 <select name="ch" id ="chselector">
-<option selected="selected" value="p1">NRK P1</option>
-<option  value="p2">NRK P2</option>
-<option  value="p3">NRK P3</option>
-<option  value="p13">NRK P13</option>
-<option  value="p1pluss">NRK P1+</option>
-<option  value="jazz">NRK alltid jazz</option>
-<option  value="klassisk">NRK alltid klassisk</option>
-<option  value="nyheter">NRK alltid nyheter</option>
-<option  value="mp3">NRK mp3</option>
-<option  value="bbc2">BBC radio 2</option>
+{% for ch in channellist %}
+<option value="{{ch}}">{{channellist[ch]['name']}}</option>
+{% endfor %}
 </select>
-
 <input type="submit" value="Velg" />
 <input name="off" type="submit" value="Av" /><button id="popout">&#8599;</button><br />
 </form><form method="post">
