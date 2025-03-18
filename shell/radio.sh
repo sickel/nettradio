@@ -11,6 +11,6 @@ then
 fi
 
 if [ $url != "off" ]; then
-   mpg123 -o alsa  $url 2> /tmp/radiotitle &
+   nohup mpg123  $url 2> /tmp/radiotitle &
    echo $! > $pidfile
 fi
