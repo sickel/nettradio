@@ -1,7 +1,7 @@
 #!/usr/bin/python
   
 import time
-import urllib2
+import urllib.request as urllib2
 import RPi.GPIO as GPIO
 import os
 import syslog
