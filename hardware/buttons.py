@@ -22,7 +22,7 @@ for btn in bt:
   GPIO.setup(btn,GPIO.IN)
   prevval[btn]=0
 
-url="http://localhost/index.php?"
+url="http://localhost?"
 
 def read_buttons():
   if debug:
