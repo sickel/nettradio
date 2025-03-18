@@ -40,33 +40,36 @@ def create_app(test_config=None):
     @app.route('/', methods=('GET', 'POST'))
     def radiopage():
         chcachefile = '/var/www/chcache'
+        # chcachefile = 'chcache'
         ch = None
         browses = {'prev': -1, 'next': 1}
-        print(request.form.get)
-        if request.method == 'POST':
-           off = request.form.get('off')
-           if not off is None:
-               os.system(f'{app.radioscript} off')
-           else: 
-             ch = request.form.get('ch')
-             if ch is None:
-                try:
-                    with open(chcachefile) as chcache:
-                        ch = chcache.read().rstrip('\n').strip()
-                except:
-                    ch = app.stationidx[0]
-             if not ch is None:
-                if not request.form.get('browse') is None:
-                    browse = browses[request.form.get('browse')]
-                    chidx = app.stationidx.index(ch)
-                    chidx += browse
-                    if chidx >= len(app.stationidx):
-                        chidx = 0
-                    ch = app.stationidx[chidx]
-                with open(chcachefile,'w') as chcache:
-                    chcache.write(ch)
-                url = app.stationlist[ch]['url']
-                os.system(f'{app.radioscript} {url}')
+        # print(request.form.get)
+        # print(request.values.get)
+        off = request.values.get('off')
+        if not off is None:
+            os.system(f'{app.radioscript} off')
+            return render_template('Nettradio.html', channellist=app.stationlist)
+        ch = request.form.get('ch')
+        # print(f'ch,form:{ch}')
+        if ch is None:
+            try:
+                with open(chcachefile) as chcache:
+                    ch = chcache.read().rstrip('\n').strip()
+            except:
+                ch = app.stationidx[0]
+        # print(f'ch:{ch}') 
+        if not ch is None:
+            if not request.values.get('browse') is None:
+                browse = browses[request.values.get('browse')]
+                chidx = app.stationidx.index(ch)
+                chidx += browse
+                if chidx >= len(app.stationidx):
+                    chidx = 0
+                ch = app.stationidx[chidx]
+            with open(chcachefile,'w') as chcache:
+                chcache.write(ch)
+            url = app.stationlist[ch]['url']
+            os.system(f'{app.radioscript} {url}')
                     
 
         return render_template('Nettradio.html', channellist=app.stationlist, activech = ch)
