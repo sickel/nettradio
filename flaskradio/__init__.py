@@ -10,35 +10,26 @@ from flask import (
 def create_app(test_config=None):
     # create and configure the app
     app = Flask(__name__, instance_relative_config=True)
-    app.config.from_mapping(
-        SECRET_KEY='dev',
-        DATABASE=os.path.join(app.instance_path, 'flaskr.sqlite'),
-    )
     app.radioscript = '/usr/local/bin/radio.sh'
 
 
-    if test_config is None:
-        # load the instance config, if it exists, when not testing
-        app.config.from_pyfile('config.py', silent=True)
-    else:
-        # load the test config if passed in
-        app.config.from_mapping(test_config)
-
-    # ensure the instance folder exists
     try:
         os.makedirs(app.instance_path)
+        print(app.instance_path)
     except OSError:
         pass
 
-    filename = 'flaskradio/stationlist.txt'
+    filename = '/var/www/html/nettradio/stationlist.txt'
 
     with open(filename,'r') as listfile:
         lines = listfile.readlines()
     app.stationlist = {}
+    app.stationidx = []
     for line in lines:
         line = line.strip()
         (key,name,url) = line.split(',')
         app.stationlist[key] = {'name':name ,'url': url}
+        app.stationidx.append(key)
 
 
     @app.route('/radiotext')
@@ -48,19 +39,35 @@ def create_app(test_config=None):
 
     @app.route('/', methods=('GET', 'POST'))
     def radiopage():
+        chcachefile = '/var/www/chcache'
         ch = None
+        browses = {'prev': -1, 'next': 1}
+        print(request.form.get)
         if request.method == 'POST':
            off = request.form.get('off')
            if not off is None:
                os.system(f'{app.radioscript} off')
            else: 
              ch = request.form.get('ch')
+             if ch is None:
+                try:
+                    with open(chcachefile) as chcache:
+                        ch = chcache.read().rstrip('\n').strip()
+                except:
+                    ch = app.stationidx[0]
              if not ch is None:
+                if not request.form.get('browse') is None:
+                    browse = browses[request.form.get('browse')]
+                    chidx = app.stationidx.index(ch)
+                    chidx += browse
+                    if chidx >= len(app.stationidx):
+                        chidx = 0
+                    ch = app.stationidx[chidx]
+                with open(chcachefile,'w') as chcache:
+                    chcache.write(ch)
                 url = app.stationlist[ch]['url']
                 os.system(f'{app.radioscript} {url}')
-                off = request.form.get('off')
-                if not off is None:
-                    os.system('{app.radioscript} off')
+                    
 
         return render_template('Nettradio.html', channellist=app.stationlist, activech = ch)
 
