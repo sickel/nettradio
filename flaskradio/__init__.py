@@ -5,7 +5,7 @@ from flask import Flask
 from flask import (
     Blueprint, flash, g, redirect, render_template, request, session, url_for
 )
-
+import json
 
 def create_app(test_config=None):
     # create and configure the app
@@ -18,9 +18,9 @@ def create_app(test_config=None):
         print(app.instance_path)
     except OSError:
         pass
-
+    app.radioon = False
+    app.chcachefile = '/var/www/chcache'
     filename = '/var/www/html/nettradio/stationlist.txt'
-
     with open(filename,'r') as listfile:
         lines = listfile.readlines()
     app.stationlist = {}
@@ -32,28 +32,35 @@ def create_app(test_config=None):
         app.stationidx.append(key)
 
 
-    @app.route('/radiotext')
+    @app.route('/radiotext', methods=('GET','POST'))
     def radiotext():
-        return 'OK'
+        returndata = {'vol':0, 'text':''}
+        try:
+            with open(app.chcachefile) as chcache:
+                ch = chcache.read().rstrip('\n').strip()
+        except:
+            ch = app.stationidx[0]
+        returndata['ch']=ch
+        return json.dumps(returndata)
 
 
     @app.route('/', methods=('GET', 'POST'))
     def radiopage():
-        chcachefile = '/var/www/chcache'
         # chcachefile = 'chcache'
         ch = None
         browses = {'prev': -1, 'next': 1}
         # print(request.form.get)
         # print(request.values.get)
         off = request.values.get('off')
-        if not off is None:
+        if not off is None and app.radioon:
             os.system(f'{app.radioscript} off')
+            app.radioon = False
             return render_template('Nettradio.html', channellist=app.stationlist)
         ch = request.form.get('ch')
         # print(f'ch,form:{ch}')
         if ch is None:
             try:
-                with open(chcachefile) as chcache:
+                with open(app.chcachefile) as chcache:
                     ch = chcache.read().rstrip('\n').strip()
             except:
                 ch = app.stationidx[0]
@@ -66,11 +73,11 @@ def create_app(test_config=None):
                 if chidx >= len(app.stationidx):
                     chidx = 0
                 ch = app.stationidx[chidx]
-            with open(chcachefile,'w') as chcache:
+            with open(app.chcachefile,'w') as chcache:
                 chcache.write(ch)
             url = app.stationlist[ch]['url']
             os.system(f'{app.radioscript} {url}')
-                    
+            app.radioon = True        
 
         return render_template('Nettradio.html', channellist=app.stationlist, activech = ch)
 
