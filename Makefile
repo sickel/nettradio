@@ -12,7 +12,7 @@ installwww:
 
 	
 installsh:
-	cp shell/* $(BINDIR)
+	cp shell/*.sh $(BINDIR)
 
 installbuttons:
 	cp hardware/buttons.py $(BINDIR)
