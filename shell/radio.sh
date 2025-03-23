@@ -11,6 +11,6 @@ then
 fi
 
 if [ $url != "off" ]; then
-   nohup mpg123  $url 2> /tmp/radiotitle &
+   nohup mpg123  --no-control $url &
    echo $! > $pidfile
 fi
