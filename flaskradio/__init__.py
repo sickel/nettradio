@@ -19,7 +19,7 @@ def create_app(test_config=None):
     except OSError:
         pass
     app.radioon = False
-    app.chcachefile = '/var/www/chcache'
+    app.chcachefile = 'chcache'
     filename = '/var/www/html/nettradio/stationlist.txt'
     with open(filename,'r') as listfile:
         lines = listfile.readlines()
