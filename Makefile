@@ -1,10 +1,13 @@
 BINDIR=/usr/local/bin
 WWWDIR=/var/www/html
 
-install: installpi installbuttons
+install: installapt installpi installbuttons
+
+installapt:
+	apt install mpg123 apache2 libapache2-mod-wsgi-py3 python3-flask  
 	addgroup www-data audio
-	apt install mpg123 apache2 php
-	
+
+
 installpi: installwww installsh
 
 installwww:
@@ -27,3 +30,6 @@ startbuttons:
 
 installhw: installbuttons
 
+
+linkweb: 
+	ln -sT ~/nettradio /var/www/html/nettradio
