@@ -10,7 +10,7 @@ installapt:
 
 installpi: installwww installsh
 
-installwww:
+installwwwphp:
 	cp www/* $(WWWDIR)
 
 	
@@ -30,6 +30,11 @@ startbuttons:
 
 installhw: installbuttons
 
+installsite:
+
+	cp /etc/apache2/sites-available/000-default.conf 000-default.backup
+	cp 000-default.conf /etc/apache2/sites-available/
+
 
 linkweb: 
-	ln -sT ~/nettradio /var/www/html/nettradio
+	ln -sT /home/pi/devel/nettradio /var/www/html/nettradio
